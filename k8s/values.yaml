@@ -1,0 +1,48 @@
+replicaCount: 2
+
+image:
+  repository: docker.io/dmytromigirov/django-sample-eks
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+
+resources: {}
+
+certificateARN: "arn:aws:acm:us-east-1:419404492020:certificate/7ac1a931-6063-4212-9e87-64fc966dcf3e"
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+env:
+  DJANGO_ALLOWED_HOSTS: "*"
+  DEBUG: "true"
+
+secretEnv:
+  DATABASE_URL: "postgres://django_user:production.cnwwi6kgmezt.us-east-1.rds.amazonaws.com:5432/django_db"
+
+
+metrics-server:
+  enabled: true
+  args:
+    - --kubelet-insecure-tls
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 200m
+      memory: 200Mi
+  metrics:
+    scrapeInterval: 15s
+
+cert-manager:
+  installCRDs: true
+  namespace: cert-manager
+  email: dmitriymigirov@gmail.com
+

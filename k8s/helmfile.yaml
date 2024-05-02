@@ -1,0 +1,7 @@
+---
+releases:
+  - name: django-sample
+    namespace: default
+    chart: ./django-sample
+    version: 0.1.0
+    installed: true 
