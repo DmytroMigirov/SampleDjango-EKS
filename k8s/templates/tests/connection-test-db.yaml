@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "django-sample.fullname" . }}-database-connection"
+  labels:
+    {{- include "django-sample.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  containers:
+    - name: psql-test
+      image: postgres:alpine
+      command: ['sh']
+      args: ["-c", "psql $DATABASE_URL"]
+      envFrom:
+        - secretRef:
+            name: {{ include "django-sample.name" . }}-secrets
+  restartPolicy: Never

@@ -26,7 +26,6 @@ env:
 secretEnv:
   DATABASE_URL: "postgres://django_user:production.cnwwi6kgmezt.us-east-1.rds.amazonaws.com:5432/django_db"
 
-
 metrics-server:
   enabled: true
   args:
@@ -46,3 +45,15 @@ cert-manager:
   namespace: cert-manager
   email: dmitriymigirov@gmail.com
 
+serviceAccount:
+  create: true
+  automount: false
+  annotations: {}
+  name: ""
+
+fullnameOverride: ""
+imagePullSecrets: []
+nameOverride: ""
+
+podAnnotations: {}
+podLabels: {}
